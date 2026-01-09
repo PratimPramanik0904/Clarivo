@@ -59,7 +59,7 @@ class ExerciseResponse(BaseModel):
 # ============= FASTAPI APP =============
 
 app = FastAPI(
-    title="StrokeSpeak AI",
+    title="Clarivo",
     description="Speech therapy for aphasia patients",
     version="1.0.0"
 )
@@ -264,7 +264,7 @@ async def get_exercises():
 async def startup():
     """Initialize on startup"""
     print("\n" + "="*60)
-    print("    🗣️  StrokeSpeak AI")
+    print("    🗣️  Clarivo")
     print("    Speech Therapy for Aphasia Patients")
     print("="*60)
     print(f"  API Server: http://localhost:8000")

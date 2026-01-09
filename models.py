@@ -1,5 +1,5 @@
 """
-ML Models for StrokeSpeak AI
+ML Models for Clarivo
 Transcription, scoring, and feedback generation
 """
 import random
@@ -10,7 +10,7 @@ from typing import Optional, Dict, Any
 import numpy as np
 
 from config import config
-from utils import AudioProcessor, TextNormalizer
+from utils import AudioProcessor, TextNormalizer, split_into_syllables
 
 # Import ML libraries
 try:
@@ -104,6 +104,7 @@ class ScoringResult:
     scores: Dict[str, float]
     target_text: str = ""
     transcribed_text: str = ""
+    word_comparison: list = None
     
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -111,7 +112,8 @@ class ScoringResult:
             "color": self.color.value,
             "scores": self.scores,
             "target": self.target_text,
-            "transcribed": self.transcribed_text
+            "transcribed": self.transcribed_text,
+            "word_comparison": self.word_comparison or []
         }
 
 
@@ -130,6 +132,10 @@ class CombinedScorer:
         wer_score = self._calculate_wer(target_norm, trans_norm)
         cer_score = self._calculate_cer(target_norm, trans_norm)
         
+        # Calculate WPM
+        wpm = 0
+        audio_duration = 0
+        
         # Prosody (if audio available)
         prosody_score = 0.6  # Default
         if audio_path and SOUNDFILE_AVAILABLE:
@@ -137,11 +143,21 @@ class CombinedScorer:
                 audio, sr = sf.read(audio_path)
                 if len(audio.shape) > 1:
                     audio = audio.mean(axis=1)
+                
+                # Calculate audio duration and WPM
+                audio_duration = len(audio) / sr
+                word_count = len(trans_norm.split())
+                if audio_duration > 0:
+                    wpm = int((word_count / audio_duration) * 60)
+                
                 features = self.audio_processor.extract_prosody_features(audio, sr)
                 # Weighted prosody: reward natural pace, penalize excessive pauses
                 prosody_score = 0.7 * features["speech_rate"] + 0.3 * (1 - min(features["pause_ratio"], 0.5))
             except:
                 pass
+        
+        # Word-level comparison
+        word_comparison = self._compare_words(target_norm, trans_norm)
         
         # Adaptive threshold based on streak (easier for beginners)
         adaptive_green = max(config.min_green_threshold, 
@@ -170,10 +186,13 @@ class CombinedScorer:
                 "word_accuracy": wer_score * 100,
                 "character_accuracy": cer_score * 100,
                 "prosody": prosody_score * 100,
-                "adaptive_threshold": adaptive_green * 100
+                "adaptive_threshold": adaptive_green * 100,
+                "wpm": wpm,
+                "duration": round(audio_duration, 2)
             },
             target_text=target_norm,
-            transcribed_text=trans_norm
+            transcribed_text=trans_norm,
+            word_comparison=word_comparison
         )
     
     def _calculate_wer(self, reference: str, hypothesis: str) -> float:
@@ -193,6 +212,31 @@ class CombinedScorer:
             return max(0.0, 1.0 - cer)
         except:
             return 0.5
+    
+    def _compare_words(self, target: str, transcribed: str) -> list:
+        """Compare words and identify errors with syllable breakdown"""
+        target_words = target.split()
+        trans_words = transcribed.split()
+        comparison = []
+        
+        # Simple word-by-word alignment
+        max_len = max(len(target_words), len(trans_words))
+        
+        for i in range(max_len):
+            expected = target_words[i] if i < len(target_words) else ''
+            spoken = trans_words[i] if i < len(trans_words) else ''
+            
+            is_correct = expected.lower() == spoken.lower()
+            
+            comparison.append({
+                'expected': expected,
+                'spoken': spoken,
+                'correct': is_correct,
+                'expected_syllables': split_into_syllables(expected) if expected else [],
+                'spoken_syllables': split_into_syllables(spoken) if spoken else []
+            })
+        
+        return comparison
 
 
 class FeedbackGenerator:

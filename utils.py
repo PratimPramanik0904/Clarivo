@@ -1,5 +1,5 @@
 """
-Utility functions for StrokeSpeak AI
+Utility functions for Clarivo
 Audio processing and text normalization
 """
 import io
@@ -96,6 +96,28 @@ class AudioProcessor:
             "speech_rate": float(speech_rate),
             "pause_ratio": float(pause_ratio)
         }
+
+
+def split_into_syllables(word: str) -> list:
+    """Simple syllable splitting (vowel-based heuristic)"""
+    if not word:
+        return []
+    
+    vowels = 'aeiouAEIOU'
+    syllables = []
+    current = ''
+    
+    for i, char in enumerate(word):
+        current += char
+        # Split after vowel if next char is consonant
+        if char in vowels and i < len(word) - 1 and word[i + 1] not in vowels:
+            syllables.append(current)
+            current = ''
+    
+    if current:
+        syllables.append(current)
+    
+    return syllables if syllables else [word]
 
 
 class TextNormalizer:

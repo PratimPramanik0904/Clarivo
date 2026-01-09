@@ -1,5 +1,5 @@
 """
-Configuration for StrokeSpeak AI
+Configuration for Clarivo
 All settings in one place
 """
 from pathlib import Path

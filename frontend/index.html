@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#1E40AF" />
-  <title>StrokeSpeak AI | Speech Clarity Assessment</title>
+  <meta name="theme-color" content="#00685b" />
+  <title>Clarivo | Speech Clarity Assessment</title>
 
   <!-- Inter Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,10 +17,10 @@
         extend: {
           colors: {
             primary: {
-              900: '#1E3A8A',
-              800: '#1E40AF',
-              700: '#2563EB',
-              600: '#3B82F6',
+              900: '#004d44',
+              800: '#00685b',
+              700: '#008c7a',
+              600: '#00a691',
             },
             neutral: {
               50: '#FAFAFA',
@@ -63,8 +63,8 @@
     .mic-btn {
       width: 130px;
       height: 130px;
-      background: #1E40AF;
-      box-shadow: 0 8px 24px rgba(30, 64, 175, 0.25);
+      background: #00685b;
+      box-shadow: 0 8px 24px rgba(0, 104, 91, 0.25);
       transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -100,7 +100,7 @@
 
     .wave-bar {
       width: 4px;
-      background: linear-gradient(to top, #1E40AF, #3B82F6);
+      background: linear-gradient(to top, #00685b, #00a691);
       border-radius: 2px;
       opacity: 0.8;
       transition: height 0.1s ease;
@@ -183,7 +183,7 @@
 
     .spinner {
       border: 4px solid #E5E7EB;
-      border-top-color: #1E40AF;
+      border-top-color: #00685b;
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -253,8 +253,48 @@
     }
 
     .sentence-card.active {
-      background: #DBEAFE;
-      border-color: #1E40AF;
+      background: #d1f5f0;
+      border-color: #00685b;
+    }
+
+    .word-comparison-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem;
+      border-radius: 8px;
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+    }
+
+    .word-box {
+      flex: 1;
+      padding: 0.5rem;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .word-box.correct {
+      background: #D1FAE5;
+      border: 2px solid #10B981;
+    }
+
+    .word-box.incorrect {
+      background: #FEE2E2;
+      border: 2px solid #EF4444;
+    }
+
+    .word-box.missing {
+      background: #FEF3C7;
+      border: 2px solid #F59E0B;
+    }
+
+    .syllable {
+      display: inline-block;
+      padding: 0.125rem 0.25rem;
+      margin: 0 0.125rem;
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 3px;
+      font-size: 0.9em;
     }
   </style>
 </head>
@@ -267,7 +307,7 @@
           <span class="text-white font-bold text-lg">🗣️</span>
         </div>
         <div>
-          <h1 class="text-lg font-semibold text-gray-900">StrokeSpeak AI</h1>
+          <h1 class="text-lg font-semibold text-gray-900">Clarivo</h1>
           <p class="text-xs text-gray-500">Speech Clarity Assessment</p>
         </div>
       </div>
@@ -333,6 +373,15 @@
               <div class="bg-purple-500 h-2 rounded-full transition-all duration-500" id="prosodyBar" style="width: 0%"></div>
             </div>
           </div>
+          <div class="mt-3 p-3 bg-blue-50 rounded-lg">
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-gray-600">Speaking Speed</span>
+              <div class="text-right">
+                <div class="text-xl font-bold text-primary-800" id="wpmValue">--</div>
+                <div class="text-xs text-gray-500">words/min</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -345,12 +394,12 @@
 
       <div id="loadingSpinner" class="hidden">
         <div class="spinner"></div>
-        <p class="text-center text-primary-800 font-medium">Analyzing your speech...</p>
+        <p class="text-center font-medium" style="color: #00685b;">Analyzing your speech...</p>
       </div>
 
       <div id="recordingUI" class="hidden mb-6">
         <div id="waveform" class="waveform-container"></div>
-        <div class="text-center text-sm text-primary-800 font-medium mt-2">Recording...</div>
+        <div class="text-center text-sm font-medium mt-2" style="color: #00685b;">Recording...</div>
       </div>
 
       <button id="micButton" class="mic-btn rounded-full flex items-center justify-center shadow-lg mb-6">
@@ -373,6 +422,11 @@
       <div id="transcriptionBox" class="hidden mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200 max-w-md">
         <div class="text-xs text-gray-600 mb-1">You said:</div>
         <div class="text-base font-medium text-gray-900" id="transcriptionText">--</div>
+      </div>
+
+      <div id="wordComparisonBox" class="hidden mt-4 p-4 bg-white rounded-lg border-2 border-gray-200 max-w-2xl">
+        <h3 class="text-sm font-semibold text-gray-700 mb-3">📝 Word-by-Word Analysis</h3>
+        <div id="wordComparisonContent" class="space-y-2"></div>
       </div>
 
       <div id="actionButtons" class="hidden mt-6 flex gap-3">
@@ -474,10 +528,10 @@
           datasets: [{
             label: 'Clarity Score (%)',
             data: [65, 72, 78, 83, 87],
-            borderColor: '#1E40AF',
-            backgroundColor: 'rgba(30, 64, 175, 0.08)',
+            borderColor: '#00685b',
+            backgroundColor: 'rgba(0, 104, 91, 0.08)',
             borderWidth: 2.5,
-            pointBackgroundColor: '#1E40AF',
+            pointBackgroundColor: '#00685b',
             pointRadius: 4,
             tension: 0.3,
             fill: true
@@ -683,6 +737,12 @@
       transcriptionText.textContent = data.transcription.text || '(no speech detected)';
       transcriptionBox.classList.remove('hidden');
 
+      // Display word comparison
+      if (data.scoring.word_comparison && data.scoring.word_comparison.length > 0) {
+        displayWordComparison(data.scoring.word_comparison);
+        document.getElementById('wordComparisonBox').classList.remove('hidden');
+      }
+
       sessionData.attempts++;
       sessionData.scores.push(score);
       sessionData.totalScore += score;
@@ -696,10 +756,12 @@
       const wordAcc = Math.round(scores.word_accuracy);
       const charAcc = Math.round(scores.character_accuracy);
       const prosody = Math.round(scores.prosody);
+      const wpm = scores.wpm || 0;
 
       document.getElementById('wordAccuracyLabel').textContent = `${wordAcc}%`;
       document.getElementById('pronunciationLabel').textContent = `${charAcc}%`;
       document.getElementById('prosodyLabel').textContent = `${prosody}%`;
+      document.getElementById('wpmValue').textContent = wpm;
 
       document.getElementById('wordAccuracyBar').style.width = `${wordAcc}%`;
       document.getElementById('pronunciationBar').style.width = `${charAcc}%`;
@@ -709,10 +771,40 @@
       actionButtons.classList.remove('hidden');
     }
 
+    function displayWordComparison(comparison) {
+      const container = document.getElementById('wordComparisonContent');
+      container.innerHTML = comparison.map((item, idx) => {
+        const expectedSyllables = item.expected_syllables.map(s => `<span class="syllable">${s}</span>`).join('');
+        const spokenSyllables = item.spoken_syllables.map(s => `<span class="syllable">${s}</span>`).join('');
+        
+        let status = 'correct';
+        let icon = '✓';
+        if (!item.correct) {
+          status = item.spoken ? 'incorrect' : 'missing';
+          icon = item.spoken ? '✗' : '?';
+        }
+        
+        return `
+          <div class="word-comparison-item">
+            <div class="w-8 text-center text-xl">${icon}</div>
+            <div class="word-box ${status}">
+              <div class="text-xs text-gray-600 mb-1">Expected</div>
+              <div class="font-semibold">${expectedSyllables || '<em>none</em>'}</div>
+            </div>
+            <div class="word-box ${item.correct ? 'correct' : 'incorrect'}">
+              <div class="text-xs text-gray-600 mb-1">You said</div>
+              <div class="font-semibold">${spokenSyllables || '<em>skipped</em>'}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
     function resetUI() {
       scoreDisplay.classList.add('hidden');
       transcriptionBox.classList.add('hidden');
       actionButtons.classList.add('hidden');
+      document.getElementById('wordComparisonBox').classList.add('hidden');
       outputBox.textContent = "Tap mic to read the sentence aloud";
       outputBox.className = "text-center text-gray-600 mb-2 text-lg font-medium";
     }

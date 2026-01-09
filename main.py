@@ -1,5 +1,5 @@
 """
-StrokeSpeak AI - Main Entry Point
+Clarivo - Main Entry Point
 Speech therapy application for aphasia patients
 Run with: python main.py
 """
