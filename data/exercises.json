@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "phrase": "yes",
+    "category": "basic",
+    "difficulty": 1,
+    "hint": "Agreeing",
+    "phonetic": "/jes/"
+  },
+  {
+    "id": 2,
+    "phrase": "no",
+    "category": "basic",
+    "difficulty": 1,
+    "hint": "Disagreeing",
+    "phonetic": "/no\u028a/"
+  },
+  {
+    "id": 3,
+    "phrase": "hello",
+    "category": "basic",
+    "difficulty": 1,
+    "hint": "Greeting",
+    "phonetic": "/h\u0259\u02c8lo\u028a/"
+  },
+  {
+    "id": 4,
+    "phrase": "bye",
+    "category": "basic",
+    "difficulty": 1,
+    "hint": "Farewell",
+    "phonetic": "/ba\u026a/"
+  },
+  {
+    "id": 5,
+    "phrase": "please",
+    "category": "basic",
+    "difficulty": 1,
+    "hint": "Polite request",
+    "phonetic": "/pli\u02d0z/"
+  },
+  {
+    "id": 6,
+    "phrase": "thanks",
+    "category": "basic",
+    "difficulty": 1,
+    "hint": "Gratitude",
+    "phonetic": "/\u03b8\u00e6\u014bks/"
+  },
+  {
+    "id": 10,
+    "phrase": "water",
+    "category": "daily",
+    "difficulty": 2,
+    "hint": "To drink",
+    "phonetic": "/\u02c8w\u0254\u02d0t\u0259r/"
+  },
+  {
+    "id": 11,
+    "phrase": "food",
+    "category": "daily",
+    "difficulty": 2,
+    "hint": "To eat",
+    "phonetic": "/fu\u02d0d/"
+  },
+  {
+    "id": 12,
+    "phrase": "bathroom",
+    "category": "daily",
+    "difficulty": 2,
+    "hint": "Restroom",
+    "phonetic": "/\u02c8b\u00e6\u03b8ru\u02d0m/"
+  },
+  {
+    "id": 13,
+    "phrase": "help",
+    "category": "daily",
+    "difficulty": 2,
+    "hint": "Need assistance",
+    "phonetic": "/help/"
+  },
+  {
+    "id": 14,
+    "phrase": "sleep",
+    "category": "daily",
+    "difficulty": 2,
+    "hint": "Rest",
+    "phonetic": "/sli\u02d0p/"
+  },
+  {
+    "id": 15,
+    "phrase": "sit",
+    "category": "daily",
+    "difficulty": 2,
+    "hint": "Chair",
+    "phonetic": "/s\u026at/"
+  },
+  {
+    "id": 20,
+    "phrase": "pain",
+    "category": "medical",
+    "difficulty": 2,
+    "hint": "Hurts",
+    "phonetic": "/pe\u026an/"
+  },
+  {
+    "id": 21,
+    "phrase": "doctor",
+    "category": "medical",
+    "difficulty": 2,
+    "hint": "Physician",
+    "phonetic": "/\u02c8d\u0252kt\u0259r/"
+  },
+  {
+    "id": 22,
+    "phrase": "medicine",
+    "category": "medical",
+    "difficulty": 3,
+    "hint": "Pills",
+    "phonetic": "/\u02c8med\u026as\u026an/"
+  },
+  {
+    "id": 23,
+    "phrase": "dizzy",
+    "category": "medical",
+    "difficulty": 2,
+    "hint": "Spinning",
+    "phonetic": "/\u02c8d\u026azi/"
+  },
+  {
+    "id": 30,
+    "phrase": "I want water",
+    "category": "phrases",
+    "difficulty": 3,
+    "hint": "Thirsty"
+  },
+  {
+    "id": 31,
+    "phrase": "I need help",
+    "category": "phrases",
+    "difficulty": 3,
+    "hint": "Assistance"
+  },
+  {
+    "id": 32,
+    "phrase": "thank you",
+    "category": "phrases",
+    "difficulty": 2,
+    "hint": "Gratitude"
+  },
+  {
+    "id": 33,
+    "phrase": "good morning",
+    "category": "phrases",
+    "difficulty": 3,
+    "hint": "AM greeting"
+  },
+  {
+    "id": 34,
+    "phrase": "how are you",
+    "category": "phrases",
+    "difficulty": 3,
+    "hint": "Asking about someone"
+  },
+  {
+    "id": 35,
+    "phrase": "I am fine",
+    "category": "phrases",
+    "difficulty": 3,
+    "hint": "Feeling good"
+  },
+  {
+    "id": 40,
+    "phrase": "one",
+    "category": "numbers",
+    "difficulty": 1,
+    "phonetic": "/w\u028cn/"
+  },
+  {
+    "id": 41,
+    "phrase": "two",
+    "category": "numbers",
+    "difficulty": 1,
+    "phonetic": "/tu\u02d0/"
+  },
+  {
+    "id": 42,
+    "phrase": "three",
+    "category": "numbers",
+    "difficulty": 1,
+    "phonetic": "/\u03b8ri\u02d0/"
+  },
+  {
+    "id": 43,
+    "phrase": "four",
+    "category": "numbers",
+    "difficulty": 1,
+    "phonetic": "/f\u0254\u02d0r/"
+  },
+  {
+    "id": 44,
+    "phrase": "five",
+    "category": "numbers",
+    "difficulty": 1,
+    "phonetic": "/fa\u026av/"
+  },
+  {
+    "id": 45,
+    "phrase": "ten",
+    "category": "numbers",
+    "difficulty": 1,
+    "phonetic": "/ten/"
+  },
+  {
+    "id": 50,
+    "phrase": "my name is",
+    "category": "social",
+    "difficulty": 3,
+    "hint": "Introduction"
+  },
+  {
+    "id": 51,
+    "phrase": "nice to meet you",
+    "category": "social",
+    "difficulty": 4,
+    "hint": "First meeting"
+  },
+  {
+    "id": 52,
+    "phrase": "see you later",
+    "category": "social",
+    "difficulty": 3,
+    "hint": "Goodbye"
+  },
+  {
+    "id": 53,
+    "phrase": "have a good day",
+    "category": "social",
+    "difficulty": 4,
+    "hint": "Wishing well"
+  }
+]

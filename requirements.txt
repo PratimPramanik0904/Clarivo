@@ -1,0 +1,44 @@
+# StrokeSpeak AI - ML Dependencies
+
+# Core ML
+torch>=2.0.0
+torchaudio>=2.0.0
+transformers>=4.35.0
+openai-whisper>=20231117
+
+# Speech Recognition
+vosk>=0.3.45
+sounddevice>=0.4.6
+soundfile>=0.12.1
+librosa>=0.10.1
+webrtcvad>=2.0.10
+
+# Text Processing & Scoring
+jiwer>=3.0.3
+sentence-transformers>=2.2.2
+nltk>=3.8.1
+rapidfuzz>=3.5.2
+
+# API Backend
+fastapi>=0.104.1
+uvicorn>=0.24.0
+python-multipart>=0.0.6
+pydantic>=2.5.0
+
+# Audio Processing
+numpy>=1.24.0
+scipy>=1.11.0
+pydub>=0.25.1
+
+# Text-to-Speech
+gTTS>=2.4.0
+pyttsx3>=2.90
+
+# Database for progress tracking
+sqlalchemy>=2.0.23
+aiosqlite>=0.19.0
+
+# Utilities
+python-dotenv>=1.0.0
+aiofiles>=23.2.1
+httpx>=0.25.2

@@ -1,0 +1,14 @@
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Other Python ignores
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
